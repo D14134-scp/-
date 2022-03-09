@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+       该Mapper负责处理sql语句
+-->
+<mapper namespace="com.hzit.bean.dao.Deptmapper">
+    <!--
+     select：表示查询
+     id：唯一值
+     resultType:表示返回值类型
+ -->
+<!--    查全部  -->
+  <select id="selectAll" resultType="com.hzit.bean.Dept">
+      SELECT *
+      FROM dept
+  </select>
+<!--   根据地址名 模糊查询-->
+   <select id="selectByloc" resultType="com.hzit.bean.Dept">
+      select * from
+      dept where loc like '%${loc}%'
+
+   </select>
+
+<!--   根据ID进行查询 -->
+    <select id="findDeptById" parameterType="int" resultType="com.hzit.bean.Dept">
+        select
+        * from dept where deptno = #{deptno}
+    </select>
+<!--   添加-->
+    <insert id="addDept">
+        insert into dept
+        values(#{deptno},#{dname},#{loc})
+    </insert>
+<!--   更新-->
+    <update id="updateDept" parameterType="com.hzit.bean.Dept">
+    update dept set
+    deptno=#{deptno},dname=#{dname},loc=#{loc}
+    where
+    deptno=#{deptno}
+    </update>
+<!--   删除-->
+    <delete id="deleteDeptById" parameterType="int">
+        delete from dept where deptno = #{deptno}
+    </delete>
+<!--   -->
+</mapper>
