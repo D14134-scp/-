@@ -2,11 +2,28 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
+
     <!--    环境-->
     <properties resource="jdbc.properties"/>
+
+    <!-- 全局设置 cacheEnabled：表示是否开启缓存-->
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+
+    <!-- 设置别名-->
+    <typeAliases>
+        <!-- 给指定的类 取别名 -->
+        <!-- <typeAlias type="com.hzit.bean.Dept" alias="Dept"/>-->
+        <!-- 给指定的包，取别名 别名：就是类名，忽略大小写 -->
+        <package name="com.hzit.bean"/>
+    </typeAliases>
+
     <environments default="development">
         <environment id="development">
+
             <transactionManager type="JDBC"/>
             <!--  数据源：jdbc也有-->
 
@@ -21,6 +38,6 @@
     <mappers>
         <!--  mapper映射文件 -->
         <mapper resource="mapper/Deptmapper.xml"/>
-
+        <mapper resource="mapper/Empmapper.xml"/>
     </mappers>
 </configuration>

@@ -6,6 +6,11 @@ import java.util.List;
 
 public interface Deptmapper {
         public Dept findDeptById(int deptno);
+
         public List<Dept> selectAll();
+        
         public List<Dept> selectByloc(String loc);
+
+        public Dept selectDeptByLocinres(String Locres);
+
 }

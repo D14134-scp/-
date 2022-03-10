@@ -25,6 +25,12 @@ public class Test01 {
         // 获取 mapper代理对象
         Deptmapper mapper = sqlSession.getMapper(Deptmapper.class);
 
+
+        //resultmap 测试
+//        Dept deptres = mapper.selectDeptByLocinres("西安");
+//        System.out.println(deptres);
+
+
           //单条查询
 //        System.out.println(">>>通过ID(deptno)获取信息");
 //        Dept testdept = mapper.findDeptById(1004);
@@ -42,7 +48,7 @@ public class Test01 {
 
 
         //查询一条 sqlSession.selectOne("");
-//         selectOne:查询一条记录，如果使用selectOne查询多条记录则抛出异常：
+//        selectOne:查询一条记录，如果使用selectOne查询多条记录则抛出异常：
 //        Dept deptfindbyid =sqlSession.selectOne("com.hzit.bean.dao.Deptmapper.findDeptById", 1001);
 //        // 输出用户信息
 //        System.out.println("deptfindbyid 员工记录为 " + deptfindbyid);
@@ -66,10 +72,10 @@ public class Test01 {
 //        for (Dept dept : deptList) {
 //            System.out.println("dept = " + dept);
 //        }
-//            // 模糊查询 sqlSession.selectList("");
-//            List<Dept> selectByloc = sqlSession.selectList("com.hzit.bean.dao.Deptmapper.selectByloc","深圳");
-//            for (Dept dept : selectByloc){
-//            System.out.println("dept = " + dept);
+//        // 模糊查询 sqlSession.selectList("");
+//        List<Dept> selectByloc = sqlSession.selectList("com.hzit.bean.dao.Deptmapper.selectByloc","深圳");
+//        for (Dept dept : selectByloc){
+//        System.out.println("dept = " + dept);
 //             }
 
 

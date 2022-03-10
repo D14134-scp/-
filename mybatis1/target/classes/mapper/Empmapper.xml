@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzit.bean.dao.Empmapper">
+
+    <sql id="baseEmp">
+    empno,ename,job,mgr,hiredate,sal,deptno
+    </sql>
+    <!--
+    set:如果不帮我们去除逗号，此时肯定会多个逗号 语法错误，set作用: 帮我们去除多于的逗号
+    UPDATE emp SET ename =xxx, where empno = xxx
+    -->
+
+    <update id="updateEmp" parameterType="Emp">
+    UPDATE emp
+    <set>
+        <if test="ename!=null and ename!=''">
+            ename = #{ename},
+        </if>
+        <if test="job!=null and job!=''">
+            job = #{job}
+        </if>
+    </set>
+        where empno = #{empno}
+    </update>
+    <select id="getEmpByParam" resultType="com.hzit.bean.Emp" parameterType="Emp">
+        SELECT *
+        FROM emp
+        WHERE 1 = 1
+        <if test="ename!=null and ename!=''">
+            and ename = #{ename}
+        </if>
+        <if test="job!=null and job!=''">
+            and job = #{job}
+        </if>
+    </select>
+    <!--
+    多分支语句，只会进入一个标签
+
+    where:自动去掉多于的 and
+    -->
+    <select id="getEmpByParam2" resultType="com.hzit.bean.Emp" parameterType="Emp">
+    SELECT *
+    FROM emp
+
+     <where>
+        <choose>
+    <when test="ename!=null and ename!=''">
+    and ename = #{ename}
+    </when>
+    <when test="job!=null and job!=''">
+    and job = #{job}
+    </when>
+        <otherwise>
+            1=1
+        </otherwise>
+     </choose>
+    </where>
+
+    </select>
+    <!--
+    批量删除：IN里面内容，传入的是一个集合或者是数组 List<Integer>
+    sql语句：DELETE FROM emp WHERE empno IN(1,2,3,4,5,6,7,8)
+    collection: 需要遍历的数组或者集合
+    open: 指定的内容开始
+    close: 指定的内容结束
+    separator: 分隔符
+    index: 索引
+    item: 选项，集合中的元素
+    -->
+    <delete id="deleteAll" parameterType="list">
+        DELETE
+        FROM emp
+        WHERE empno IN
+        <foreach collection="list" open="(" close=")" separator="," index="idx"
+                 item="empno">
+            #{empno}
+        </foreach>
+    </delete>
+
+    <insert id="insertAll" >
+    insert into emp(<include refid="baseEmp"/>)
+    values <foreach collection="list" item="emp" separator="," close=";">
+        (null,#{emp.ename},#{emp.job},#{emp.mgr},#{emp.hiredate},#{emp.sal},#{emp.deptno})
+    </foreach>
+    </insert>
+
+
+
+
+
+
+
+
+
+
+</mapper>

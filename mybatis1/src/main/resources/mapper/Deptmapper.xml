@@ -11,7 +11,13 @@
      id：唯一值
      resultType:表示返回值类型
  -->
-<!--    查全部  -->
+
+    <!-- 定义公共的SQL片段 -->
+    <sql id="baseDept">
+        deptno, dname, loc
+    </sql>
+
+    <!--    查全部  -->
   <select id="selectAll" resultType="com.hzit.bean.Dept">
       SELECT *
       FROM dept
@@ -22,7 +28,6 @@
       dept where loc like '%${loc}%'
 
    </select>
-
 <!--   根据ID进行查询 -->
     <select id="findDeptById" parameterType="int" resultType="com.hzit.bean.Dept">
         select
@@ -45,4 +50,32 @@
         delete from dept where deptno = #{deptno}
     </delete>
 <!--   -->
+    <!--D
+    定义一个resultMap,常用的属性：
+    id:唯一值，一个xml文件中，可以有多条resultMap
+    type：具体手动映射的对象
+    resultMa提供了多个子标签，（属性字段-数据库字段的手动绑定）
+    id :主键
+    result ：普通字段映射
+    association ：字段是一个对象（对应关系）
+    collection ：字段是一个集合（对应关系）
+    -->
+    <resultMap id="baseMap" type="Dept" >
+        <!-- property：对象的字段 column：数据库的字段 -->
+        <id property="deptno" column="deptno"/>
+        <result property="dname" column="dname"/>
+        <result property="loc" column="loc"/>
+
+<!--        <association property="xx"/>-->
+<!--        <collection property="xx"/>-->
+    </resultMap>
+<!--  使用手动映射的resultMap，映射规则主要参考baseMap对的对象  -->
+    <select id="selectDeptByLocinres" resultMap="baseMap" parameterType="string">
+        SELECT
+        <include refid="baseDept"/>
+        FROM dept
+        WHERE loc = #{loc}
+    </select>
+
+
 </mapper>
